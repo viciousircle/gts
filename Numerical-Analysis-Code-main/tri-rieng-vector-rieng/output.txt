@@ -1,0 +1,38 @@
+Ma trận đối xứng A:
+[[4 1 2 0 0 0]
+ [1 5 3 0 0 0]
+ [2 3 6 0 0 0]
+ [0 0 0 2 1 0]
+ [0 0 0 1 3 0]
+ [0 0 0 0 0 5]]
+
+Giá trị riêng λ_1 = 9.418832673644731
+Vector riêng tương ứng v_1 = [3.74358727e-01 5.77350266e-01 7.25618504e-01 5.20818323e-09
+ 8.42701717e-09 1.21775170e-05]
+
+Kiểm tra tính chất vector riêng và giá trị riêng λ_1: Sai
+Giá trị riêng λ_2 = 4.999999991517557
+Vector riêng tương ứng v_2 = [ 1.81099336e-06 -2.06053608e-05 -1.61531868e-05  3.09467710e-05
+  5.00729274e-05  9.99999998e-01]
+
+Kiểm tra tính chất vector riêng và giá trị riêng λ_2: Sai
+Giá trị riêng λ_3 = 3.618033927877711
+Vector riêng tương ứng v_3 = [ 4.12422549e-04 -2.91973458e-04  1.95048007e-05  5.25731043e-01
+  8.50650697e-01 -8.13579102e-05]
+
+Kiểm tra tính chất vector riêng và giá trị riêng λ_3: Sai
+Giá trị riêng λ_4 = 3.3867702159462656
+Vector riêng tương ứng v_4 = [-8.15600310e-01  5.77327928e-01 -3.85785762e-02  2.84010785e-04
+  4.59539243e-04  1.87791940e-05]
+
+Kiểm tra tính chất vector riêng và giá trị riêng λ_4: Sai
+Giá trị riêng λ_5 = 2.194397165766466
+Vector riêng tương ứng v_5 = [ 4.41176151e-01  5.77384632e-01 -6.87015712e-01 -3.93761704e-05
+  2.43736114e-05  1.11668075e-09]
+
+Kiểm tra tính chất vector riêng và giá trị riêng λ_5: Sai
+Giá trị riêng λ_6 = 1.3819660140166745
+Vector riêng tương ứng v_6 = [-3.24411687e-05 -4.24573343e-05  5.05188162e-05 -8.50650806e-01
+  5.25731111e-01 -8.54762578e-14]
+
+Kiểm tra tính chất vector riêng và giá trị riêng λ_6: Sai

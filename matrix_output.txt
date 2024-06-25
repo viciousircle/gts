@@ -1,3 +1,0 @@
-nan nan 0.000000
-nan nan 0.000000
-nan -inf 0.271429
