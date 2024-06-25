@@ -10,10 +10,10 @@ num_decimal = 5  # Số chữ số thập phân hiển thị
 # Nhập phương trình cần giải
 def f(x):
     # return 2 * x**5 - 12 * x**4 + 3 * x**2 - 15
-    # return math.log(x) - 1
+    return math.log(x) - 1
     # return math.sin(x)
     # return x**5 - 17
-    return math.exp(x) - math.cos(2 * x)
+    # return math.exp(x) - math.cos(2 * x)
 
 def sign_f(x):
     if f(x) < 0:

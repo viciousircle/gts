@@ -1,7 +1,7 @@
 import numpy as np
 import sys
 
-data = np.genfromtxt('A.txt', delimiter=' ')
+data = np.genfromtxt('/Users/a8888/Documents/doc uni/gts/Numerical-Analysis-Code-main/dinhthuc/A.txt', delimiter=' ')
 A = np.array(data)
 print("A = ", A)
 
