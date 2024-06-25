@@ -1,7 +1,7 @@
 import numpy as np
 
 def power_method(A, tol=1e-8, max_iter=1000):
-    n = A.shape[0]
+    m, n = A.shape
     
     # Chọn vector bắt đầu ngẫu nhiên có độ dài 1
     v = np.random.rand(n)
@@ -9,10 +9,10 @@ def power_method(A, tol=1e-8, max_iter=1000):
     
     # Lặp tối đa max_iter lần
     for iter in range(max_iter):
-        # Bước 1: Tính A * v^(k-1)
-        w = np.dot(A, v)
+        # Bước 1: Tính A.T * A * v^(k-1)
+        w = np.dot(A.T, np.dot(A, v))
         
-        # Bước 2: Tính λ_k = v^(k-1)T * w^(k)
+        # Bước 2: Tính λ_k = v^(k-1)T * A.T * A * v^(k-1)
         lambda_ = np.dot(v, w)
         
         # Bước 3: Chuẩn hóa v^(k) = w^(k) / ||w^(k)|| để tính toán tiếp
@@ -27,33 +27,35 @@ def power_method(A, tol=1e-8, max_iter=1000):
     
     return lambda_, v
 
-def find_anomalous_expansion(A, lambda_1):
+def find_anomalous_expansion(A):
     m, n = A.shape
     
     # Bước 1: Tính giá trị riêng lớn nhất và vector riêng tương ứng
-    # lambda_1, v_1 = power_method(A)  # lambda_1 được truyền từ bên ngoài
+    lambda_1, v_1 = power_method(A)
     
     # Bước 2: Xây dựng ma trận đặc trưng B = lambda_1 * v_1 * v_1^T
-    v_1 = power_method(A)[1]
-    B = lambda_1 * np.outer(v_1, v_1)
+    B = np.outer(v_1, v_1)  # Đây là cách tính outer product chính xác
+    
+    # Nhân với lambda_1 để có ma trận đặc trưng B
+    B *= lambda_1
+    
+    # Đảm bảo B có cùng kích thước với A
+    B = B[:m, :n]
     
     # Bước 3: Tính ma trận khai triển kỳ dị A_anomalous = A - B
     A_anomalous = A - B
     
-    return A_anomalous, lambda_1, v_1
+    return A_anomalous, lambda_1, v_1, B
 
 if __name__ == "__main__":
-    # Ma trận cấp 5x5 đầu vào cho ví dụ
+    # Ma trận đầu vào có kích thước 3x5
     A = np.array([[2, 1, 0, 0, 0],
                   [1, 3, 1, 0, 0],
-                  [0, 1, 4, 1, 0],
-                  [0, 0, 1, 5, 1],
-                  [0, 0, 0, 1, 6]])
+                  [0, 1, 4, 1, 0]])
     
     try:
-        # Tìm giá trị riêng lớn nhất và ma trận khai triển kỳ dị của ma trận A
-        lambda_1, v_1 = power_method(A)
-        A_anomalous, _, _ = find_anomalous_expansion(A, lambda_1)
+        # Tìm ma trận khai triển kỳ dị của ma trận A và thông tin khác
+        A_anomalous, lambda_1, v_1, B = find_anomalous_expansion(A)
         
         # In kết quả
         print("Ma trận A:")
@@ -63,7 +65,7 @@ if __name__ == "__main__":
         print(f"Vector riêng tương ứng v_1 = {v_1}")
         print("\nBước 2: Xây dựng ma trận đặc trưng B = lambda_1 * v_1 * v_1^T:")
         print("Ma trận đặc trưng B:")
-        print(lambda_1 * np.outer(v_1, v_1))
+        print(B)
         print("\nBước 3: Tính ma trận khai triển kỳ dị A_anomalous = A - B:")
         print("Ma trận khai triển kỳ dị A_anomalous:")
         print(A_anomalous)
