@@ -1,29 +1,36 @@
 import numpy as np
 
-def cholesky_decomposition(A):
+def inverse_bordering_method(A):
     n = A.shape[0]
-    L = np.zeros((n, n))
     
-    for i in range(n):
-        for j in range(i+1):
-            sum_term = sum(L[i, k] * L[j, k] for k in range(j))
-            if i == j:
-                L[i, j] = np.sqrt(A[i, i] - sum_term)
-            else:
-                L[i, j] = (A[i, j] - sum_term) / L[j, j]
+    # Bắt đầu với ma trận nghịch đảo của ma trận 1x1
+    inv_A = np.array([[1 / A[0, 0]]])
     
-    return L
-
-def inverse_from_cholesky(L):
-    n = L.shape[0]
-    I = np.eye(n)
-    inverse_A = np.zeros((n, n))
+    for k in range(1, n):
+        # Xác định ma trận và vectơ tương ứng với viền thêm vào
+        B = A[:k, :k]
+        b = A[:k, k]
+        c = A[k, :k]
+        d = A[k, k]
+        
+        # Tính phần bổ sung của ma trận nghịch đảo
+        u = -inv_A @ b
+        v = -c @ inv_A
+        alpha = d + c @ inv_A @ b
+        
+        if alpha == 0:
+            raise ValueError("Matrix is singular and cannot be inverted using bordering method.")
+        
+        # Cập nhật ma trận nghịch đảo
+        new_inv_A = np.zeros((k+1, k+1))
+        new_inv_A[:k, :k] = inv_A + (u[:, None] @ v[None, :]) / alpha
+        new_inv_A[:k, k] = u / alpha
+        new_inv_A[k, :k] = v / alpha
+        new_inv_A[k, k] = 1 / alpha
+        
+        inv_A = new_inv_A
     
-    for i in range(n):
-        Y = np.linalg.solve(L, I[:, i])
-        inverse_A[:, i] = np.linalg.solve(L.T, Y)
-    
-    return inverse_A
+    return inv_A
 
 def save_matrix_to_file(matrix, filename):
     try:
@@ -51,16 +58,11 @@ if __name__ == "__main__":
     print("Ma trận đọc từ file:")
     print(A)
     
-    if not np.allclose(A, A.T):
-        print("Lỗi: Ma trận không đối xứng.")
+    try:
+        A_inv = inverse_bordering_method(A)
+    except ValueError as e:
+        print(f"Lỗi: {e}")
         exit(1)
-    if not np.all(np.linalg.eigvals(A) > 0):
-        print("Lỗi: Ma trận không xác định dương.")
-        exit(1)
-    
-    L = cholesky_decomposition(A)
-    
-    A_inv = inverse_from_cholesky(L)
     
     print("\nMa trận nghịch đảo của A:")
     print(A_inv)
